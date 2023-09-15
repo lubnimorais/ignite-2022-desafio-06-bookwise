@@ -26,11 +26,13 @@ export default function Login() {
             title="Entrar com o Google"
             image="/images/icons/google.svg"
             alt="Logotipo Google"
+            provider="google"
           />
           <AuthButton
             title="Entrar com o Github"
             image="/images/icons/github.svg"
             alt="Logotipo Github"
+            provider="github"
           />
           <AuthButton
             title="Entrar como visitante"
