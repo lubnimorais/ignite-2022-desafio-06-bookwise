@@ -1,6 +1,8 @@
 import { signOut, useSession } from 'next-auth/react';
+import { NextPageWithLayout } from './_app.page';
+import { DefaultLayout } from '@/layouts/DefaultLayout';
 
-export default function Home() {
+const HomePage: NextPageWithLayout = () => {
   const { data } = useSession();
 
   return (
@@ -10,4 +12,10 @@ export default function Home() {
       <button onClick={() => signOut()}>Deslogar</button>
     </>
   );
-}
+};
+
+HomePage.getLayout = (page) => {
+  return <DefaultLayout title="Início">{page}</DefaultLayout>;
+};
+
+export default HomePage;
