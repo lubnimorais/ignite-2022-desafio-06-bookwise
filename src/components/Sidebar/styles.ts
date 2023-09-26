@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { styled } from '../../../stitches.config';
 
 export const SidebarContainer = styled('aside', {
@@ -24,5 +26,40 @@ export const SidebarContainer = styled('aside', {
     width: 128,
 
     marginBottom: 64,
+  },
+});
+
+export const LoginButton = styled(Link, {
+  fontSize: '$md',
+  fontWeight: 700,
+  color: '$gray200',
+  textDecoration: 'none',
+
+  display: 'flex',
+  alignItems: 'center',
+  gap: '$2',
+
+  svg: {
+    color: '$gray100',
+  },
+});
+
+export const UserDetail = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  gap: '$3',
+
+  svg: {
+    cursor: 'pointer',
+  },
+
+  p: {
+    maxWidth: 100,
+
+    whiteSpace: 'nowrap',
+
+    overflow: 'hidden',
+
+    textOverflow: 'ellipsis',
   },
 });
