@@ -5,11 +5,13 @@ import { DefaultLayout } from '@/layouts/DefaultLayout';
 import { LatestRatings } from '@/components/LatestRatings';
 
 import { HomeContainer } from './home';
+import { PopularBooks } from '@/components/PopularBooks';
 
 const HomePage: NextPageWithLayout = () => {
   return (
     <HomeContainer>
-      <LatestRatings></LatestRatings>
+      <LatestRatings />
+      <PopularBooks />
     </HomeContainer>
   );
 };
