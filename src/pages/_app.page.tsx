@@ -5,6 +5,10 @@ import type { AppProps } from 'next/app';
 
 import { SessionProvider } from 'next-auth/react';
 
+import { QueryClientProvider } from '@tanstack/react-query';
+
+import { queryClient } from '@/libs/react-query';
+
 import { Nunito } from 'next/font/google';
 
 import { globalStyles } from '@/styles/global';
@@ -28,10 +32,12 @@ export default function App({
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
-    <SessionProvider session={session}>
-      <div className={`${nunito.className}`}>
-        {getLayout(<Component {...pageProps} />)}
-      </div>
-    </SessionProvider>
+    <QueryClientProvider client={queryClient}>
+      <SessionProvider session={session}>
+        <div className={`${nunito.className}`}>
+          {getLayout(<Component {...pageProps} />)}
+        </div>
+      </SessionProvider>
+    </QueryClientProvider>
   );
 }

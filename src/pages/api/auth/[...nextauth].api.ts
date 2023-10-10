@@ -1,4 +1,4 @@
-import { PrismaAdapter } from '@/services/auth/PrismaAdapter';
+import { PrismaAdapter } from '@/libs/auth/PrismaAdapter';
 import { NextApiRequest, NextApiResponse, NextPageContext } from 'next';
 
 import { NextAuthOptions } from 'next-auth';

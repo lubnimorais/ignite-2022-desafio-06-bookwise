@@ -3,7 +3,7 @@ import { BookCardContainer, BookDetails, BookImage, BookName } from './styles';
 import { Text } from '../Typography';
 import { RatingStars } from '../RatingStarts';
 
-interface IBookWithAverageRating extends Book {
+export interface IBookWithAverageRating extends Book {
   averageRating: number;
 }
 
