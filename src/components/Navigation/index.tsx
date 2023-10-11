@@ -16,7 +16,7 @@ const NAV_ITENS = [
   },
   {
     label: 'Explorar',
-    href: '/explore',
+    href: '/explorer',
     icon: <Binoculars size={24} />,
   },
 ];

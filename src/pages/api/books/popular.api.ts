@@ -47,7 +47,7 @@ export default async function handler(
 
     return {
       ...bookInfo,
-      avgRating: bookAvgRating?._avg.rate,
+      averageRating: bookAvgRating?._avg.rate,
     };
   });
 
