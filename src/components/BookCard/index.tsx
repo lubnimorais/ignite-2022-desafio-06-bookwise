@@ -1,10 +1,18 @@
 import { Book } from '@prisma/client';
-import { BookCardContainer, BookDetails, BookImage, BookName } from './styles';
+import {
+  BookCardContainer,
+  BookDetails,
+  BookImage,
+  BookName,
+  ReadBadge,
+} from './styles';
 import { Text } from '../Typography';
 import { RatingStars } from '../RatingStarts';
+import { RatingsDialog } from '../RatingsDialog';
 
 export interface IBookWithAverageRating extends Book {
   averageRating: number;
+  alreadyRead: boolean;
 }
 
 interface IBookCardProps {
@@ -25,28 +33,32 @@ const BookCard = ({ book, size = 'md' }: IBookCardProps) => {
   };
 
   return (
-    <BookCardContainer>
-      <BookImage
-        src={book.cover_url}
-        width={IMAGE_SIZES[size].width}
-        height={IMAGE_SIZES[size].height}
-        alt={book.name}
-        css={{
-          minWidth: IMAGE_SIZES[size].width,
-        }}
-      />
+    <RatingsDialog bookId={book.id}>
+      <BookCardContainer>
+        {book.alreadyRead && <ReadBadge>LIDO</ReadBadge>}
 
-      <BookDetails>
-        <div>
-          <BookName size="xs">{book.name}</BookName>
-          <Text size="sm" color="gray-400">
-            {book.author}
-          </Text>
-        </div>
+        <BookImage
+          src={book.cover_url}
+          width={IMAGE_SIZES[size].width}
+          height={IMAGE_SIZES[size].height}
+          alt={book.name}
+          css={{
+            minWidth: IMAGE_SIZES[size].width,
+          }}
+        />
 
-        <RatingStars rating={book.averageRating} />
-      </BookDetails>
-    </BookCardContainer>
+        <BookDetails>
+          <div>
+            <BookName size="xs">{book.name}</BookName>
+            <Text size="sm" color="gray-400">
+              {book.author}
+            </Text>
+          </div>
+
+          <RatingStars rating={book.averageRating} />
+        </BookDetails>
+      </BookCardContainer>
+    </RatingsDialog>
   );
 };
 

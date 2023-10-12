@@ -16,11 +16,33 @@ export const BookCardContainer = styled('div', {
 
   cursor: 'pointer',
 
+  position: 'relative',
+
+  overflow: 'hidden',
+
   transition: '0.2s',
 
   '&:hover': {
     borderColor: '$gray600',
   },
+});
+
+export const ReadBadge = styled('span', {
+  position: 'absolute',
+  top: 0,
+  right: 0,
+
+  display: 'block',
+
+  background: '#0A313C',
+
+  fontSize: '$xs',
+  fontWeight: '$bold',
+  color: '$green100',
+
+  padding: '$1 $3',
+
+  borderRadius: '0 4px 0 4px',
 });
 
 export const BookImage = styled(Image, {
