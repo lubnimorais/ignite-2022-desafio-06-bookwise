@@ -124,7 +124,7 @@ const RatingsDialog = ({ children, bookId }: IRatingsDialogProps) => {
                 </BookInfos>
               </BookDetailsWrapper>
 
-              <BookRatings ratings={book.ratings} />
+              <BookRatings ratings={book.ratings} bookId={bookId} />
             </>
           )}
         </DialogContent>

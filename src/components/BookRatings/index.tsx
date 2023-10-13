@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 import { Link } from '../Link';
 
@@ -7,14 +7,18 @@ import { Text } from '../Typography';
 import { IRatingWithAuthor, UserRatingCard } from '../UserRatingCard';
 
 import { BookRatingsContainer } from './styles';
+import { RatingForm } from '../RatingForm';
 
 interface IBookRatingsProps {
   ratings: IRatingWithAuthor[];
+  bookId: string;
 }
 
-const BookRatings = ({ ratings }: IBookRatingsProps) => {
+const BookRatings = ({ ratings, bookId }: IBookRatingsProps) => {
+  const [showForm, setShowForm] = useState(false);
+
   const handleRate = useCallback(() => {
-    console.log('aqui');
+    setShowForm(true);
   }, []);
 
   return (
@@ -26,6 +30,15 @@ const BookRatings = ({ ratings }: IBookRatingsProps) => {
       </header>
 
       <section>
+        {showForm && (
+          <RatingForm
+            bookId={bookId}
+            onCancel={() => {
+              setShowForm(false);
+            }}
+          />
+        )}
+
         {ratings.map((rating) => (
           <UserRatingCard key={rating.id} rating={rating} />
         ))}
