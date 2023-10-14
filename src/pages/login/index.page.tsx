@@ -33,12 +33,14 @@ export default function Login() {
             alt="Logotipo Google"
             provider="google"
           />
+
           <AuthButton
             title="Entrar com o Github"
             image="/images/icons/github.svg"
             alt="Logotipo Github"
             provider="github"
           />
+
           <AuthButton
             title="Entrar como visitante"
             image="/images/icons/rocket.svg"

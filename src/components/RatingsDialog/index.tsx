@@ -1,4 +1,6 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
+
+import { useRouter } from 'next/router';
 
 import * as Dialog from '@radix-ui/react-dialog';
 
@@ -43,6 +45,9 @@ interface IRatingsDialogProps {
 const RatingsDialog = ({ children, bookId }: IRatingsDialogProps) => {
   const [open, setOpen] = useState(false);
 
+  const router = useRouter();
+  const paramBookId = router.query.bookId as string;
+
   const { data: book } = useQuery<IBookDetail>(
     ['book', bookId],
     async () => {
@@ -60,8 +65,33 @@ const RatingsDialog = ({ children, bookId }: IRatingsDialogProps) => {
   const categories =
     book?.categories.map((category) => category.category.name).join(', ') || '';
 
+  // FUNCTIONS
+  const onOpenChange = useCallback(
+    async (open: boolean) => {
+      if (open) {
+        await router.push(`/explorer?bookId=${bookId}`, undefined, {
+          shallow: true,
+        });
+      } else {
+        await router.push('/explorer', undefined, { shallow: true });
+      }
+
+      setOpen(open);
+    },
+    [bookId, router],
+  );
+  // END FUNCTIONS
+
+  // USE EFFECT
+  useEffect(() => {
+    if (paramBookId === bookId) {
+      setOpen(true);
+    }
+  }, [bookId, paramBookId]);
+  // END USE EFFECT
+
   return (
-    <Dialog.Root open={open} onOpenChange={setOpen}>
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Trigger asChild>{children}</Dialog.Trigger>
 
       <Dialog.Portal>

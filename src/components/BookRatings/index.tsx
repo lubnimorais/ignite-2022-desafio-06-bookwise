@@ -1,13 +1,16 @@
-import { useCallback, useState } from 'react';
+import { Fragment, useCallback, useState } from 'react';
 
-import { Link } from '../Link';
+import { useSession } from 'next-auth/react';
 
 import { Text } from '../Typography';
 
 import { IRatingWithAuthor, UserRatingCard } from '../UserRatingCard';
 
-import { BookRatingsContainer } from './styles';
+import { Link } from '../Link';
 import { RatingForm } from '../RatingForm';
+
+import { BookRatingsContainer } from './styles';
+import { LoginDialog } from '../LoginDialog';
 
 interface IBookRatingsProps {
   ratings: IRatingWithAuthor[];
@@ -17,16 +20,38 @@ interface IBookRatingsProps {
 const BookRatings = ({ ratings, bookId }: IBookRatingsProps) => {
   const [showForm, setShowForm] = useState(false);
 
+  const { data: session, status } = useSession();
+
+  const isAuthenticated = status === 'authenticated';
+
+  const canRate = ratings.every((item) => item.user_id !== session?.user.id);
+
+  const sortedRatingsByDate = ratings.sort((a, b) => {
+    return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+  });
+
+  const RatingWrapper = isAuthenticated ? Fragment : LoginDialog;
+
+  // FUNCTIONS
   const handleRate = useCallback(() => {
+    if (!isAuthenticated) {
+      return;
+    }
+
     setShowForm(true);
-  }, []);
+  }, [isAuthenticated]);
+  // END FUNCTIONS
 
   return (
     <BookRatingsContainer>
       <header>
         <Text>Avaliações</Text>
 
-        <Link withoutIcon onClick={handleRate} text="Avaliar" />
+        {canRate && (
+          <RatingWrapper>
+            <Link withoutIcon onClick={handleRate} text="Avaliar" />
+          </RatingWrapper>
+        )}
       </header>
 
       <section>
@@ -39,7 +64,7 @@ const BookRatings = ({ ratings, bookId }: IBookRatingsProps) => {
           />
         )}
 
-        {ratings.map((rating) => (
+        {sortedRatingsByDate.map((rating) => (
           <UserRatingCard key={rating.id} rating={rating} />
         ))}
       </section>

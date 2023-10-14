@@ -60,7 +60,7 @@ const RatingCard = ({ rating }: IRatingCard) => {
       </UserDetails>
 
       <BookDetails>
-        <Link href={`/explore?book=${rating.book_id}`}>
+        <Link href={`/explore?bookId=${rating.book_id}`}>
           <BookImage
             width={108}
             height={152}
