@@ -8,6 +8,7 @@ import {
   BookContent,
   BookDetails,
   BookImage,
+  CompatDetails,
   RatingCardContainer,
   ToggleShowMoreButton,
   UserDetails,
@@ -24,11 +25,12 @@ export interface IRatingWithAuthorAndBook extends Rating {
 
 interface IRatingCard {
   rating: IRatingWithAuthorAndBook;
+  variant?: 'default' | 'compact';
 }
 
 const MAX_SUMMARY_LENGTH = 180;
 
-const RatingCard = ({ rating }: IRatingCard) => {
+const RatingCard = ({ rating, variant = 'default' }: IRatingCard) => {
   const distanceDate = getRelativeTimeString(
     new Date(rating.created_at),
     'pt-BR',
@@ -41,23 +43,25 @@ const RatingCard = ({ rating }: IRatingCard) => {
   } = useToggleShowMore(rating.book.summary, MAX_SUMMARY_LENGTH);
 
   return (
-    <RatingCardContainer>
-      <UserDetails>
-        <section>
-          <Link href={`/profile/${rating.user_id}`}>
-            <Avatar src={rating.user.avatar_url!} alt={rating.user.name} />
-          </Link>
+    <RatingCardContainer variant={variant}>
+      {variant === 'default' && (
+        <UserDetails>
+          <section>
+            <Link href={`/profile/${rating.user_id}`}>
+              <Avatar src={rating.user.avatar_url!} alt={rating.user.name} />
+            </Link>
 
-          <div>
-            <Text>{rating.user.name}</Text>
-            <Text size="sm" color="gray-400">
-              {distanceDate}
-            </Text>
-          </div>
-        </section>
+            <div>
+              <Text>{rating.user.name}</Text>
+              <Text size="sm" color="gray-400">
+                {distanceDate}
+              </Text>
+            </div>
+          </section>
 
-        <RatingStars rating={rating.rate} />
-      </UserDetails>
+          <RatingStars rating={rating.rate} />
+        </UserDetails>
+      )}
 
       <BookDetails>
         <Link href={`/explore?bookId=${rating.book_id}`}>
@@ -71,6 +75,16 @@ const RatingCard = ({ rating }: IRatingCard) => {
 
         <BookContent>
           <div>
+            {variant === 'compact' && (
+              <CompatDetails>
+                <Text size="sm" color="gray-300">
+                  {distanceDate}
+                </Text>
+
+                <RatingStars rating={rating.rate} />
+              </CompatDetails>
+            )}
+
             <Heading size="xs">{rating.book.name}</Heading>
             <Text size="sm" color="gray-400">
               {rating.book.author}

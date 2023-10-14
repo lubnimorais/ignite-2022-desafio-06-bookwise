@@ -24,3 +24,19 @@ export const LatestRatingsContainer = styled('div', {
     marginTop: '$4',
   },
 });
+
+export const LatestContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+
+  marginBottom: 40,
+
+  header: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '$4',
+
+    marginBottom: '$4',
+  },
+});

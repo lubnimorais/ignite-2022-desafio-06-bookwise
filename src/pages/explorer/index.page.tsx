@@ -1,10 +1,12 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { NextPageWithLayout } from '../_app.page';
 
 import { Binoculars, MagnifyingGlass } from 'phosphor-react';
 
 import { DefaultLayout } from '@/layouts/DefaultLayout';
+
+import { Category } from '@prisma/client';
 
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/libs/axios';
@@ -16,7 +18,6 @@ import { Tag } from '@/components/Tag';
 import { BookCard, IBookWithAverageRating } from '@/components/BookCard';
 
 import { BookGrid, ExplorerContainer, TagsContainer } from './styles';
-import { Category } from '@prisma/client';
 
 const ExplorePage: NextPageWithLayout = () => {
   const [search, setSearch] = useState('');
@@ -52,11 +53,13 @@ const ExplorePage: NextPageWithLayout = () => {
   }, []);
   // END FUNCTIONS
 
-  const filteredBooks = books?.filter(
-    (book) =>
-      book.name.toLowerCase().includes(search.toLowerCase()) ||
-      book.author.toLowerCase().includes(search.toLowerCase()),
-  );
+  const filteredBooks = useMemo(() => {
+    return books?.filter(
+      (book) =>
+        book.name.toLowerCase().includes(search.toLowerCase()) ||
+        book.author.toLowerCase().includes(search.toLowerCase()),
+    );
+  }, [search, books]);
 
   return (
     <ExplorerContainer>

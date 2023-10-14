@@ -12,7 +12,27 @@ export const RatingCardContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
 
-  background: '$gray700',
+  variants: {
+    variant: {
+      default: {
+        background: '$gray700',
+      },
+
+      compact: {
+        background: '$gray600',
+      },
+    },
+  },
+});
+
+export const CompatDetails = styled('div', {
+  width: '100%',
+
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+
+  marginBottom: '$3',
 });
 
 export const UserDetails = styled('div', {
